@@ -21,6 +21,8 @@ simulated protected function OnEffectAdded(const out EffectAppliedData ApplyEffe
 		{
 			TargetUnit.SetCurrentStat(eStat_Will, CurrentWill + WillMod);
 		}
+
+		`Log(TargetUnit.GetFullName() @ "lost" @ WillMod @ "will and is now at" @ TargetUnit.GetCurrentStat(eStat_Will), class'X2DLCInfo_ChosenBrutalFix'.default.EnableDebug, 'ChosenBrutalFix');
 	}
 }
 
@@ -37,6 +39,8 @@ simulated function AddX2ActionsForVisualization(XComGameState VisualizeGameState
 	if (OldUnit != none && NewUnit != None)
 	{
 		WillChange = NewUnit.GetCurrentStat(eStat_Will) - OldUnit.GetCurrentStat(eStat_Will);
+
+		`Log(WillChange @ "will loss on" @ NewUnit.GetFullName() , class'X2DLCInfo_ChosenBrutalFix'.default.EnableDebug, 'ChosenBrutalFix');
 
 		if (WillChange != 0)
 		{

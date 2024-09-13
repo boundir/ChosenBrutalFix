@@ -21,15 +21,13 @@ static function ReplaceBrutalEffectFromAbilities()
 
 	AbilityTemplateManager = class'X2AbilityTemplateManager'.static.GetAbilityTemplateManager();
 
-	BrutalEffectFix = new class'X2Effect_BrutalFix';
-
 	foreach default.BRUTAL_EFFECT_FIX(TemplateName)
 	{
 		AbilityTemplate = AbilityTemplateManager.FindAbilityTemplate(TemplateName);
 
 		if (AbilityTemplate == none)
 		{
-			return;
+			continue;
 		}
 
 		for (Index = AbilityTemplate.AbilityTargetEffects.Length - 1; Index >= 0; Index--)
@@ -41,13 +39,16 @@ static function ReplaceBrutalEffectFromAbilities()
 				continue;
 			}
 
+			`Log("Fixing target effect for ability" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
+			`Log("Original effect Will modifier:" @ OriginalBrutalEffect.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+
+			BrutalEffectFix = new class'X2Effect_BrutalFix';
 			BrutalEffectFix.WillMod = OriginalBrutalEffect.WillMod;
 
 			AbilityTemplate.AbilityTargetEffects.Remove(Index, 1);
 			AbilityTemplate.AddTargetEffect(BrutalEffectFix);
 
-			`Log("Brutal fixed target effect for ability" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
-			`Log("Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+			`Log("New effect Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
 
 			break;
 		}
@@ -61,13 +62,16 @@ static function ReplaceBrutalEffectFromAbilities()
 				continue;
 			}
 
+			`Log("Fixing multi target effect for ability" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
+			`Log("Original effect Will modifier:" @ OriginalBrutalEffect.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+
+			BrutalEffectFix = new class'X2Effect_BrutalFix';
 			BrutalEffectFix.WillMod = OriginalBrutalEffect.WillMod;
 
 			AbilityTemplate.AbilityMultiTargetEffects.Remove(Index, 1);
 			AbilityTemplate.AddMultiTargetEffect(BrutalEffectFix);
 
-			`Log("Brutal fixed multi target effect for" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
-			`Log("Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+			`Log("New effect Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
 
 			break;
 		}
@@ -86,8 +90,6 @@ static function ReplaceBrutalEffectFromItems()
 	local int Index;
 
 	ItemTemplateManager = class'X2ItemTemplateManager'.static.GetItemTemplateManager();
-
-	BrutalEffectFix = new class'X2Effect_BrutalFix';
 
 	foreach default.BRUTAL_EFFECT_FIX(TemplateName)
 	{
@@ -111,13 +113,16 @@ static function ReplaceBrutalEffectFromItems()
 					continue;
 				}
 
+				`Log("Fixing grenade effect for grenade" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
+				`Log("Original effect Will modifier:" @ OriginalBrutalEffect.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+
+				BrutalEffectFix = new class'X2Effect_BrutalFix';
 				BrutalEffectFix.WillMod = OriginalBrutalEffect.WillMod;
 
 				GrenadeTemplate.ThrownGrenadeEffects.Remove(Index, 1);
 				GrenadeTemplate.ThrownGrenadeEffects.AddItem(BrutalEffectFix);
 
-				`Log("Brutal fixed target effect for grenade" @ TemplateName, default.EnableDebug, 'ChosenBrutalFix');
-				`Log("Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
+				`Log("New effect Will modifier:" @ BrutalEffectFix.WillMod, default.EnableDebug, 'ChosenBrutalFix');
 
 				break;
 			}
